@@ -53,3 +53,12 @@ exports.getPreferences = (req, res) => {
     });
   };
   
+  exports.getDestinations = (req, res) => {
+    const destinations = loadJSON('data/destinations.json');
+    res.json(destinations);
+  };
+  
+  exports.getVacationTypes = (req, res) => {
+    const vacationTypes = loadJSON('data/vacationTypes.json');
+    res.json(vacationTypes);
+  };
