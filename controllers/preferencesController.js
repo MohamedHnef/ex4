@@ -1,11 +1,11 @@
 const Preferences = require('../models/preferencesModel');
 const jwt = require('jsonwebtoken');
-const { loadJSON } = require('../utils/jsonLoader'); // Correct import statement
+const { loadJSON } = require('../utils/jsonLoader'); 
 
 const db = require('../db');
 
-const destinations = loadJSON('data/destinations.json'); // Correct usage
-const vacationTypes = loadJSON('data/vacationTypes.json'); // Correct usage
+const destinations = loadJSON('data/destinations.json'); 
+const vacationTypes = loadJSON('data/vacationTypes.json'); 
 
 exports.savePreferences = (req, res) => {
   const { start_date, end_date, destination, vacation_type } = req.body;
@@ -40,7 +40,16 @@ exports.savePreferences = (req, res) => {
           console.log('Database error on insert:', err);
           return res.status(500).json({ message: 'Database error', error: err });
         }
-        res.status(200).json({ message: 'Preferences saved successfully' });
+        res.status(200).json({
+          message: 'Preferences saved successfully',
+          preference: {
+            user_id: userId,
+            start_date,
+            end_date,
+            destination,
+            vacation_type
+          }
+        });
       });
     });
   } catch (err) {
@@ -94,7 +103,16 @@ exports.updatePreferences = async (req, res) => {
         }
 
         console.log('Preferences updated successfully for user ID:', user_id);
-        res.status(200).json({ message: 'Preferences updated successfully' });
+        res.status(200).json({
+          message: 'Preferences updated successfully',
+          preference: {
+            user_id,
+            start_date,
+            end_date,
+            destination,
+            vacation_type
+          }
+        });
       });
     });
   } catch (error) {
