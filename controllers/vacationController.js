@@ -53,3 +53,4 @@ exports.calculateVacation = (req, res) => {
     });
   });
 };
+

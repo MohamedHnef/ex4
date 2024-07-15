@@ -3,9 +3,9 @@ const router = express.Router();
 const preferencesController = require('../controllers/preferencesController');
 const authMiddleware = require('../middleware/authMiddleware');
 
+router.get('/', preferencesController.getPreferences);
 router.post('/save', authMiddleware, preferencesController.savePreferences);
-router.get('/all', preferencesController.getPreferences);
+router.put('/update', authMiddleware, preferencesController.updatePreferences); 
 router.get('/destinations', preferencesController.getDestinations);
 router.get('/vacationTypes', preferencesController.getVacationTypes);
-
 module.exports = router;
