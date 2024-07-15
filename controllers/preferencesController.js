@@ -122,3 +122,7 @@ exports.getDestinations = (req, res) => {
 exports.getVacationTypes = (req, res) => {
   res.json(vacationTypes);
 };
+
+exports.deletePreference = (req, res) => {
+  res.status(403).json({ message: 'Preferences cannot be deleted, you can only update/add' });
+};

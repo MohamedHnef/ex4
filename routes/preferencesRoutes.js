@@ -8,4 +8,5 @@ router.post('/save', authMiddleware, preferencesController.savePreferences);
 router.put('/update', authMiddleware, preferencesController.updatePreferences); 
 router.get('/destinations', preferencesController.getDestinations);
 router.get('/vacationTypes', preferencesController.getVacationTypes);
+router.delete('/delete', preferencesController.deletePreference);
 module.exports = router;
