@@ -49,6 +49,10 @@ exports.calculateVacation = async (req, res) => {
     try {
       // Fetch weather information
       const weatherApiKey = process.env.WEATHER_API_KEY;
+      if (!weatherApiKey) {
+        return res.status(500).json({ message: 'Weather API key is not set' });
+      }
+      
       const weatherUrl = `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${majorityDestination}`;
       const weatherResponse = await axios.get(weatherUrl);
       const weather = weatherResponse.data.current;
@@ -65,6 +69,9 @@ exports.calculateVacation = async (req, res) => {
       });
     } catch (error) {
       console.log('Error fetching weather information:', error);
+      if (error.response) {
+        return res.status(error.response.status).json({ message: 'Error fetching weather information', error: error.response.data });
+      }
       return res.status(500).json({ message: 'Error fetching weather information', error });
     }
   });
