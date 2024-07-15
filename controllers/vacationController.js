@@ -47,7 +47,6 @@ exports.calculateVacation = async (req, res) => {
     }
 
     try {
-      // Fetch weather information
       const weatherApiKey = process.env.WEATHER_API_KEY;
       if (!weatherApiKey) {
         return res.status(500).json({ message: 'Weather API key is not set' });
