@@ -52,27 +52,25 @@ exports.calculateVacation = async (req, res) => {
       if (!weatherApiKey) {
         return res.status(500).json({ message: 'Weather API key is not set' });
       }
-      
-      const weatherUrl = `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${majorityDestination}`;
+
+      const weatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${majorityDestination}&appid=${weatherApiKey}`;
       console.log('Weather URL:', weatherUrl); // Add logging
+
       const weatherResponse = await axios.get(weatherUrl);
       console.log('Weather Response:', weatherResponse.data); // Add logging
-      const weather = weatherResponse.data.current;
+      const weather = weatherResponse.data.weather[0].description;
 
       res.status(200).json({
         destination: majorityDestination,
         vacation_type: majorityVacationType,
         start_date: overlappingDates.start.toISOString().split('T')[0],
         end_date: overlappingDates.end.toISOString().split('T')[0],
-        weather: {
-          temperature: weather.temp_c,
-          condition: weather.condition.text
-        }
+        weather: weather
       });
     } catch (error) {
       console.log('Error fetching weather information:', error);
       if (error.response) {
-        console.log('Error Response:', error.response.data); 
+        console.log('Error Response:', error.response.data);
         return res.status(error.response.status).json({ message: 'Error fetching weather information', error: error.response.data });
       }
       return res.status(500).json({ message: 'Error fetching weather information', error });
